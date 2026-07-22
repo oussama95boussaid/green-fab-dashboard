@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenFab Platform | WP2 Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F9FAFB; }
+        .card-shadow { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03); }
+        /* Simulated 3D Environment Background */
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, #f1f5f9 1px, transparent 1px),
+                linear-gradient(to bottom, #f1f5f9 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between z-20">
+        <div>
+            <div class="h-20 flex items-center px-8 border-b border-slate-100">
+                <!-- GreenFab Logo SVG -->
+                <svg class="w-8 h-8 text-emerald-600 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <span class="text-xl font-bold tracking-tight text-slate-900">Green<span class="text-emerald-600">Fab</span></span>
+            </div>
+            <nav class="p-4 space-y-1">
+                <a href="#" class="flex items-center px-3 py-2 bg-gray-50 text-emerald-700 rounded-md font-medium text-sm">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Home Dashboard
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md font-medium text-sm transition-colors">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>
+                    KPI Data Engine
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md font-medium text-sm transition-colors">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    AI Matching Models
+                </a>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-500 font-semibold text-xs">
+                    I2L
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">I2L Workspace</p>
+                    <p class="text-xs text-gray-500">Metz Campus</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10">
+            <h1 class="text-lg font-semibold text-gray-800">Ecosystem Overview</h1>
+            <div class="flex items-center space-x-3">
+                <span class="flex items-center text-sm text-gray-600">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
+                    API Connected
+                </span>
+            </div>
+        </header>
+
+        <div class="p-8 max-w-7xl mx-auto w-full space-y-6">
+
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">GreenFab Command Center</h2>
+                <p class="text-gray-500 mt-1">Real-time connectivity and structural health of the WP2 methodological framework.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Database Synchronization</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mt-1">99.8%</h3>
+                        </div>
+                        <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path></svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-sm text-emerald-600 font-medium">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        2,710 Raw Indicators Indexed
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">AI Embedding Latency</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mt-1">42ms</h3>
+                        </div>
+                        <div class="p-2 bg-purple-50 rounded-lg text-purple-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-sm text-gray-500">
+                        Multilingual L2-Normalized Vectors
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Interface WP2 ↔ WP3</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mt-1">Active</h3>
+                        </div>
+                        <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="mt-4 w-full bg-gray-100 rounded-full h-1.5">
+                        <div class="bg-emerald-500 h-1.5 rounded-full" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 card-shadow overflow-hidden flex flex-col">
+                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-900">360° Logistics Twin Viewer</h3>
+                        <p class="text-xs text-gray-500">Live 3D Ecosystem Render (WebGL Placeholder)</p>
+                    </div>
+                    <button class="text-sm text-gray-500 hover:text-gray-900 font-medium px-3 py-1 bg-white border border-gray-200 rounded shadow-sm">
+                        Expand Render
+                    </button>
+                </div>
+                
+                <div class="h-96 w-full relative grid-bg bg-white flex items-center justify-center">
+                    
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-2 rounded shadow-sm border border-gray-100 text-xs text-gray-600 font-mono">
+                        <div>CAM: Orthographic</div>
+                        <div>Z-INDEX: 1.442</div>
+                    </div>
+                    <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur px-3 py-2 rounded shadow-sm border border-gray-100 text-xs text-gray-600 flex space-x-2">
+                        <div class="w-3 h-3 bg-red-400 rounded-sm"></div>
+                        <div class="w-3 h-3 bg-green-400 rounded-sm"></div>
+                        <div class="w-3 h-3 bg-blue-400 rounded-sm"></div>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="relative w-32 h-32 mx-auto mb-4 border-2 border-dashed border-emerald-300 rounded-full flex items-center justify-center animate-[spin_20s_linear_infinite]">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-full border border-emerald-400 flex items-center justify-center">
+                                <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                            </div>
+                        </div>
+                        <p class="text-sm font-medium text-gray-700">Digital Twin Engine Ready</p>
+                        <p class="text-xs text-gray-400 mt-1">Awaiting local factory spatial data injection</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 card-shadow">
+                <div class="px-6 py-4 border-b border-gray-100">
+                    <h3 class="text-base font-semibold text-gray-900">Recent Platform Activity</h3>
+                </div>
+                <div class="p-0">
+                    <table class="w-full text-left text-sm">
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-3 text-gray-500 w-32">14 mins ago</td>
+                                <td class="px-6 py-3 font-medium text-gray-900">De-duplication pipeline completed</td>
+                                <td class="px-6 py-3 text-right text-gray-500">Threshold: 0.98</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-3 text-gray-500">2 hours ago</td>
+                                <td class="px-6 py-3 font-medium text-gray-900">SME applicability rules updated</td>
+                                <td class="px-6 py-3 text-right text-emerald-600">Success</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-3 text-gray-500">Yesterday</td>
+                                <td class="px-6 py-3 font-medium text-gray-900">WP1 Raw dataset synced</td>
+                                <td class="px-6 py-3 text-right text-gray-500">2,710 rows</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
