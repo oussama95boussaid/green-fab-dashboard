@@ -12,35 +12,61 @@
         /* Simulated 3D Environment Background */
         .grid-bg {
             background-size: 40px 40px;
-            background-image: 
+            background-image:
                 linear-gradient(to right, #f1f5f9 1px, transparent 1px),
                 linear-gradient(to bottom, #f1f5f9 1px, transparent 1px);
         }
+        /* Chart palette — colorblind-safe categorical slots + status roles */
+        :root {
+            --c-blue:   #2a78d6;
+            --c-aqua:   #1baf7a;
+            --c-yellow: #eda100;
+            --c-violet: #4a3aa7;
+            --c-orange: #eb6834;
+            --c-red:    #e34948;
+            --s-good:    #0ca30c;
+            --s-warning: #fab219;
+            --s-critical:#d03b3b;
+        }
+        .bar-col { transition: transform .15s ease, filter .15s ease; }
+        .bar-col:hover { filter: brightness(1.06); transform: translateY(-2px); }
+        [data-view].hidden { display: none; }
+        /* Subtle rise-in when switching pages */
+        [data-view]:not(.hidden) > * { animation: fade .25s ease both; }
+        @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
     </style>
 </head>
 <body class="text-gray-800 antialiased h-screen flex overflow-hidden">
 
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between z-20">
+    <!-- ============================ SIDEBAR ============================ -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between z-20 shrink-0">
         <div>
             <div class="h-20 flex items-center px-8 border-b border-slate-100">
-                <!-- GreenFab Logo SVG -->
                 <svg class="w-8 h-8 text-emerald-600 mr-3" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
                 <span class="text-xl font-bold tracking-tight text-slate-900">Green<span class="text-emerald-600">Fab</span></span>
             </div>
             <nav class="p-4 space-y-1">
-                <a href="#" class="flex items-center px-3 py-2 bg-gray-50 text-emerald-700 rounded-md font-medium text-sm">
+                <a href="#" data-page="home" data-title="Ecosystem Overview" class="nav-link flex items-center px-3 py-2 rounded-md font-medium text-sm transition-colors">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     Home Dashboard
                 </a>
-                <a href="#" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md font-medium text-sm transition-colors">
+                <a href="#" data-page="kpi" data-title="KPI Data Engine" class="nav-link flex items-center px-3 py-2 rounded-md font-medium text-sm transition-colors">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>
                     KPI Data Engine
                 </a>
-                <a href="#" class="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md font-medium text-sm transition-colors">
+                <a href="#" data-page="ai" data-title="AI Matching Models" class="nav-link flex items-center px-3 py-2 rounded-md font-medium text-sm transition-colors">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     AI Matching Models
+                </a>
+                <a href="#" data-page="analytics" data-title="Analytics & Insights" class="nav-link flex items-center px-3 py-2 rounded-md font-medium text-sm transition-colors">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    Analytics
+                </a>
+                <a href="#" data-page="settings" data-title="Workspace Settings" class="nav-link flex items-center px-3 py-2 rounded-md font-medium text-sm transition-colors">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    Settings
                 </a>
             </nav>
         </div>
@@ -57,10 +83,11 @@
         </div>
     </aside>
 
+    <!-- ============================ MAIN ============================ -->
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        
-        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10">
-            <h1 class="text-lg font-semibold text-gray-800">Ecosystem Overview</h1>
+
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 sticky top-0">
+            <h1 id="page-title" class="text-lg font-semibold text-gray-800">Ecosystem Overview</h1>
             <div class="flex items-center space-x-3">
                 <span class="flex items-center text-sm text-gray-600">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
@@ -69,8 +96,8 @@
             </div>
         </header>
 
-        <div class="p-8 max-w-7xl mx-auto w-full space-y-6">
-
+        <!-- ============ PAGE: HOME ============ -->
+        <section data-view="home" class="p-8 max-w-7xl mx-auto w-full space-y-6">
             <div>
                 <h2 class="text-2xl font-bold text-gray-900">GreenFab Command Center</h2>
                 <p class="text-gray-500 mt-1">Real-time connectivity and structural health of the WP2 methodological framework.</p>
@@ -134,9 +161,8 @@
                         Expand Render
                     </button>
                 </div>
-                
+
                 <div class="h-96 w-full relative grid-bg bg-white flex items-center justify-center">
-                    
                     <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-2 rounded shadow-sm border border-gray-100 text-xs text-gray-600 font-mono">
                         <div>CAM: Orthographic</div>
                         <div>Z-INDEX: 1.442</div>
@@ -146,7 +172,6 @@
                         <div class="w-3 h-3 bg-green-400 rounded-sm"></div>
                         <div class="w-3 h-3 bg-blue-400 rounded-sm"></div>
                     </div>
-
                     <div class="text-center">
                         <div class="relative w-32 h-32 mx-auto mb-4 border-2 border-dashed border-emerald-300 rounded-full flex items-center justify-center animate-[spin_20s_linear_infinite]">
                             <div class="w-16 h-16 bg-emerald-100 rounded-full border border-emerald-400 flex items-center justify-center">
@@ -185,9 +210,509 @@
                     </table>
                 </div>
             </div>
+        </section>
 
-        </div>
+        <!-- ============ PAGE: KPI DATA ENGINE ============ -->
+        <section data-view="kpi" class="hidden p-8 max-w-7xl mx-auto w-full space-y-6">
+            <div class="flex items-end justify-between flex-wrap gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">KPI Data Engine</h2>
+                    <p class="text-gray-500 mt-1">Cleaning, harmonisation and de-duplication of the WP2 sustainability indicator library.</p>
+                </div>
+                <button class="text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg shadow-sm flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Ingest New Batch
+                </button>
+            </div>
+
+            <!-- Stat tiles -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <p class="text-sm font-medium text-gray-500">Total Indicators</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-1 tabular-nums">2,710</h3>
+                    <p class="mt-2 text-xs text-gray-400">Raw import from WP1</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <p class="text-sm font-medium text-gray-500">Cleaned &amp; Validated</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-1 tabular-nums">2,438</h3>
+                    <p class="mt-2 text-xs font-medium" style="color:var(--s-good)">90.0% of library</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <p class="text-sm font-medium text-gray-500">Duplicates Merged</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-1 tabular-nums">187</h3>
+                    <p class="mt-2 text-xs text-gray-400">Cosine ≥ 0.98</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <p class="text-sm font-medium text-gray-500">Pending Review</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-1 tabular-nums">85</h3>
+                    <p class="mt-2 text-xs font-medium" style="color:var(--s-warning)">Manual arbitration</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                <!-- Bar chart: KPIs by category -->
+                <div class="lg:col-span-3 bg-white rounded-xl border border-gray-200 card-shadow p-6">
+                    <h3 class="text-base font-semibold text-gray-900">Indicators by Sustainability Domain</h3>
+                    <p class="text-xs text-gray-500 mb-6">Count of validated KPIs across the six WP2 domains</p>
+                    <div class="flex items-end justify-between gap-4 h-56 border-b border-gray-200 pb-0">
+                        <!-- bars: value/564*100% of the 200px plot -->
+                        <div class="flex-1 flex flex-col items-center justify-end h-full">
+                            <span class="text-xs font-semibold text-gray-700 mb-1 tabular-nums">564</span>
+                            <div class="bar-col w-full rounded-t-md" style="height:100%;background:var(--c-aqua)" title="Social & Governance — 564"></div>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center justify-end h-full">
+                            <span class="text-xs font-semibold text-gray-700 mb-1 tabular-nums">512</span>
+                            <div class="bar-col w-full rounded-t-md" style="height:90.8%;background:var(--c-aqua)" title="Energy — 512"></div>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center justify-end h-full">
+                            <span class="text-xs font-semibold text-gray-700 mb-1 tabular-nums">468</span>
+                            <div class="bar-col w-full rounded-t-md" style="height:83.0%;background:var(--c-aqua)" title="Emissions — 468"></div>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center justify-end h-full">
+                            <span class="text-xs font-semibold text-gray-700 mb-1 tabular-nums">421</span>
+                            <div class="bar-col w-full rounded-t-md" style="height:74.6%;background:var(--c-aqua)" title="Waste — 421"></div>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center justify-end h-full">
+                            <span class="text-xs font-semibold text-gray-700 mb-1 tabular-nums">389</span>
+                            <div class="bar-col w-full rounded-t-md" style="height:69.0%;background:var(--c-aqua)" title="Water — 389"></div>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center justify-end h-full">
+                            <span class="text-xs font-semibold text-gray-700 mb-1 tabular-nums">356</span>
+                            <div class="bar-col w-full rounded-t-md" style="height:63.1%;background:var(--c-aqua)" title="Materials — 356"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between gap-4 mt-2 text-[11px] text-gray-500 text-center">
+                        <div class="flex-1">Social</div>
+                        <div class="flex-1">Energy</div>
+                        <div class="flex-1">Emissions</div>
+                        <div class="flex-1">Waste</div>
+                        <div class="flex-1">Water</div>
+                        <div class="flex-1">Materials</div>
+                    </div>
+                </div>
+
+                <!-- Data quality composition -->
+                <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 card-shadow p-6 flex flex-col">
+                    <h3 class="text-base font-semibold text-gray-900">Data Quality Split</h3>
+                    <p class="text-xs text-gray-500 mb-5">Status of the 2,710 imported records</p>
+                    <div class="w-full h-4 rounded-full overflow-hidden flex mb-5">
+                        <div style="width:90%;background:var(--s-good)" title="Cleaned — 90%"></div>
+                        <div style="width:3.1%;background:var(--s-warning)" title="Pending — 3.1%"></div>
+                        <div style="width:6.9%;background:var(--c-violet)" title="Duplicates — 6.9%"></div>
+                    </div>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-sm mr-2" style="background:var(--s-good)"></span>Cleaned &amp; validated</span>
+                            <span class="font-semibold text-gray-800 tabular-nums">2,438</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-sm mr-2" style="background:var(--c-violet)"></span>Duplicates merged</span>
+                            <span class="font-semibold text-gray-800 tabular-nums">187</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-sm mr-2" style="background:var(--s-warning)"></span>Pending review</span>
+                            <span class="font-semibold text-gray-800 tabular-nums">85</span>
+                        </li>
+                    </ul>
+                    <div class="mt-auto pt-5 text-xs text-gray-400 border-t border-gray-100 mt-5">
+                        Last pipeline run: 14 minutes ago
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data table -->
+            <div class="bg-white rounded-xl border border-gray-200 card-shadow overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                    <h3 class="text-base font-semibold text-gray-900">Indicator Library</h3>
+                    <div class="relative">
+                        <input type="text" placeholder="Search indicators…" class="text-sm border border-gray-200 rounded-lg pl-8 pr-3 py-1.5 w-56 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400">
+                        <svg class="w-4 h-4 text-gray-400 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm min-w-[640px]">
+                        <thead class="bg-gray-50/70 text-xs uppercase tracking-wide text-gray-500">
+                            <tr>
+                                <th class="px-6 py-3 font-medium">ID</th>
+                                <th class="px-6 py-3 font-medium">Indicator</th>
+                                <th class="px-6 py-3 font-medium">Domain</th>
+                                <th class="px-6 py-3 font-medium">Unit</th>
+                                <th class="px-6 py-3 font-medium">Lang</th>
+                                <th class="px-6 py-3 font-medium text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-3 font-mono text-xs text-gray-500">KPI-0142</td>
+                                <td class="px-6 py-3 font-medium text-gray-900">Specific energy consumption per part</td>
+                                <td class="px-6 py-3 text-gray-600">Energy</td>
+                                <td class="px-6 py-3 text-gray-600 tabular-nums">kWh/unit</td>
+                                <td class="px-6 py-3"><span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-700">EN</span></td>
+                                <td class="px-6 py-3 text-right"><span class="text-xs font-medium" style="color:var(--s-good)">● Validated</span></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-3 font-mono text-xs text-gray-500">KPI-0387</td>
+                                <td class="px-6 py-3 font-medium text-gray-900">Wasseranteil im Produktionsprozess</td>
+                                <td class="px-6 py-3 text-gray-600">Water</td>
+                                <td class="px-6 py-3 text-gray-600 tabular-nums">%</td>
+                                <td class="px-6 py-3"><span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-700">DE</span></td>
+                                <td class="px-6 py-3 text-right"><span class="text-xs font-medium" style="color:var(--s-good)">● Validated</span></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-3 font-mono text-xs text-gray-500">KPI-0511</td>
+                                <td class="px-6 py-3 font-medium text-gray-900">CO₂ equivalent per production hour</td>
+                                <td class="px-6 py-3 text-gray-600">Emissions</td>
+                                <td class="px-6 py-3 text-gray-600 tabular-nums">kg CO₂e/h</td>
+                                <td class="px-6 py-3"><span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-700">EN</span></td>
+                                <td class="px-6 py-3 text-right"><span class="text-xs font-medium" style="color:var(--s-warning)">● Review</span></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-3 font-mono text-xs text-gray-500">KPI-0698</td>
+                                <td class="px-6 py-3 font-medium text-gray-900">Recyclingquote der Reststoffe</td>
+                                <td class="px-6 py-3 text-gray-600">Waste</td>
+                                <td class="px-6 py-3 text-gray-600 tabular-nums">%</td>
+                                <td class="px-6 py-3"><span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-700">DE</span></td>
+                                <td class="px-6 py-3 text-right"><span class="text-xs font-medium" style="color:var(--s-good)">● Validated</span></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-3 font-mono text-xs text-gray-500">KPI-0844</td>
+                                <td class="px-6 py-3 font-medium text-gray-900">Share of recycled input materials</td>
+                                <td class="px-6 py-3 text-gray-600">Materials</td>
+                                <td class="px-6 py-3 text-gray-600 tabular-nums">%</td>
+                                <td class="px-6 py-3"><span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-700">EN</span></td>
+                                <td class="px-6 py-3 text-right"><span class="text-xs font-medium" style="color:var(--c-violet)">● Duplicate</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                    <span>Showing 5 of 2,710 indicators</span>
+                    <div class="flex items-center space-x-1">
+                        <button class="px-2.5 py-1 rounded border border-gray-200 hover:bg-gray-50">Prev</button>
+                        <button class="px-2.5 py-1 rounded border border-gray-200 bg-emerald-600 text-white">1</button>
+                        <button class="px-2.5 py-1 rounded border border-gray-200 hover:bg-gray-50">2</button>
+                        <button class="px-2.5 py-1 rounded border border-gray-200 hover:bg-gray-50">3</button>
+                        <button class="px-2.5 py-1 rounded border border-gray-200 hover:bg-gray-50">Next</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PAGE: AI MATCHING MODELS ============ -->
+        <section data-view="ai" class="hidden p-8 max-w-7xl mx-auto w-full space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">AI Matching Models</h2>
+                <p class="text-gray-500 mt-1">Multilingual semantic matching engine mapping SME indicators to the WP2 reference taxonomy.</p>
+            </div>
+
+            <!-- Model cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">ACTIVE</span>
+                        <span class="text-xs text-gray-400 font-mono">v2.3</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-gray-900 mt-3">paraphrase-multilingual-mpnet</h3>
+                    <p class="text-xs text-gray-500 mt-1">768-dim · DE / EN / FR sentence embeddings</p>
+                    <dl class="mt-4 space-y-2 text-sm">
+                        <div class="flex justify-between"><dt class="text-gray-500">Top-1 accuracy</dt><dd class="font-semibold text-gray-800 tabular-nums">94.2%</dd></div>
+                        <div class="flex justify-between"><dt class="text-gray-500">Mean cosine</dt><dd class="font-semibold text-gray-800 tabular-nums">0.87</dd></div>
+                    </dl>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">CANDIDATE</span>
+                        <span class="text-xs text-gray-400 font-mono">v0.9</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-gray-900 mt-3">e5-large-instruct</h3>
+                    <p class="text-xs text-gray-500 mt-1">1024-dim · instruction-tuned retrieval</p>
+                    <dl class="mt-4 space-y-2 text-sm">
+                        <div class="flex justify-between"><dt class="text-gray-500">Top-1 accuracy</dt><dd class="font-semibold text-gray-800 tabular-nums">95.8%</dd></div>
+                        <div class="flex justify-between"><dt class="text-gray-500">Mean cosine</dt><dd class="font-semibold text-gray-800 tabular-nums">0.89</dd></div>
+                    </dl>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow flex flex-col">
+                    <h3 class="text-base font-semibold text-gray-900">Matching Threshold</h3>
+                    <p class="text-xs text-gray-500 mt-1">Minimum cosine similarity to auto-accept</p>
+                    <div class="mt-4 flex items-baseline gap-1">
+                        <span class="text-3xl font-bold text-gray-900 tabular-nums">0.82</span>
+                        <span class="text-sm text-gray-400">cosine</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="82" class="w-full mt-4 accent-emerald-600">
+                    <div class="flex justify-between text-[11px] text-gray-400 mt-1"><span>Loose</span><span>Strict</span></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                <!-- Confidence distribution line/area -->
+                <div class="lg:col-span-3 bg-white rounded-xl border border-gray-200 card-shadow p-6">
+                    <h3 class="text-base font-semibold text-gray-900">Match Confidence Distribution</h3>
+                    <p class="text-xs text-gray-500 mb-4">Share of matched pairs by cosine similarity band</p>
+                    <svg viewBox="0 0 520 220" class="w-full h-56" role="img" aria-label="Match confidence distribution line chart">
+                        <!-- gridlines -->
+                        <g stroke="#e1e0d9" stroke-width="1">
+                            <line x1="40" y1="20"  x2="510" y2="20"/>
+                            <line x1="40" y1="70"  x2="510" y2="70"/>
+                            <line x1="40" y1="120" x2="510" y2="120"/>
+                            <line x1="40" y1="170" x2="510" y2="170"/>
+                        </g>
+                        <!-- baseline -->
+                        <line x1="40" y1="170" x2="510" y2="170" stroke="#c3c2b7" stroke-width="1"/>
+                        <!-- area -->
+                        <path d="M40,160 L128,140 L216,95 L304,45 L392,70 L510,150 L510,170 L40,170 Z" fill="var(--c-blue)" fill-opacity="0.10"/>
+                        <!-- line -->
+                        <path d="M40,160 L128,140 L216,95 L304,45 L392,70 L510,150" fill="none" stroke="var(--c-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- points -->
+                        <g fill="var(--c-blue)">
+                            <circle cx="40" cy="160" r="3.5"/><circle cx="128" cy="140" r="3.5"/><circle cx="216" cy="95" r="3.5"/>
+                            <circle cx="304" cy="45" r="3.5"/><circle cx="392" cy="70" r="3.5"/><circle cx="510" cy="150" r="3.5"/>
+                        </g>
+                        <!-- x labels -->
+                        <g fill="#898781" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">
+                            <text x="40"  y="190">0.5</text><text x="128" y="190">0.6</text><text x="216" y="190">0.7</text>
+                            <text x="304" y="190">0.8</text><text x="392" y="190">0.9</text><text x="500" y="190">1.0</text>
+                        </g>
+                    </svg>
+                    <p class="text-xs text-gray-400 mt-1 text-center">Cosine similarity →</p>
+                </div>
+
+                <!-- Top matches -->
+                <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 card-shadow p-6">
+                    <h3 class="text-base font-semibold text-gray-900">Recent Semantic Matches</h3>
+                    <p class="text-xs text-gray-500 mb-5">SME indicator → WP2 reference</p>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-700 truncate pr-2">Energieverbrauch je Charge</span>
+                                <span class="font-semibold tabular-nums" style="color:var(--s-good)">0.96</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="h-1.5 rounded-full" style="width:96%;background:var(--c-blue)"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-700 truncate pr-2">Water reuse ratio</span>
+                                <span class="font-semibold tabular-nums" style="color:var(--s-good)">0.91</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="h-1.5 rounded-full" style="width:91%;background:var(--c-blue)"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-700 truncate pr-2">Ausschussquote pro Schicht</span>
+                                <span class="font-semibold tabular-nums" style="color:var(--s-good)">0.88</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="h-1.5 rounded-full" style="width:88%;background:var(--c-blue)"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-700 truncate pr-2">Scope 2 emissions intensity</span>
+                                <span class="font-semibold tabular-nums" style="color:var(--s-warning)">0.79</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="h-1.5 rounded-full" style="width:79%;background:var(--s-warning)"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-700 truncate pr-2">Lieferantenbewertung ESG</span>
+                                <span class="font-semibold tabular-nums" style="color:var(--s-warning)">0.74</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="h-1.5 rounded-full" style="width:74%;background:var(--s-warning)"></div></div>
+                        </div>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-gray-100 text-xs text-gray-400 flex justify-between">
+                        <span>Auto-accepted ≥ 0.82</span><span class="font-medium text-emerald-600">3 of 5 accepted</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PAGE: ANALYTICS ============ -->
+        <section data-view="analytics" class="hidden p-8 max-w-7xl mx-auto w-full space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Analytics &amp; Insights</h2>
+                <p class="text-gray-500 mt-1">Processing throughput and coverage across the WP2 harmonisation programme.</p>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <p class="text-sm font-medium text-gray-500">Processed this month</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-1 tabular-nums">612</h3>
+                    <p class="mt-2 text-xs font-medium" style="color:var(--s-good)">▲ 18% vs. June</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <p class="text-sm font-medium text-gray-500">Avg. cosine quality</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-1 tabular-nums">0.87</h3>
+                    <p class="mt-2 text-xs text-gray-400">Across all matches</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <p class="text-sm font-medium text-gray-500">Taxonomy coverage</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-1 tabular-nums">82%</h3>
+                    <p class="mt-2 text-xs text-gray-400">Reference nodes mapped</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 card-shadow">
+                    <p class="text-sm font-medium text-gray-500">Partner SMEs</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-1 tabular-nums">37</h3>
+                    <p class="mt-2 text-xs text-gray-400">4 countries</p>
+                </div>
+            </div>
+
+            <!-- Trend line chart -->
+            <div class="bg-white rounded-xl border border-gray-200 card-shadow p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-semibold text-gray-900">Indicators Processed Over Time</h3>
+                        <p class="text-xs text-gray-500">Cumulative cleaned indicators, Jan–Jul 2026</p>
+                    </div>
+                    <span class="flex items-center text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-sm mr-1.5" style="background:var(--c-aqua)"></span>Cleaned indicators</span>
+                </div>
+                <svg viewBox="0 0 700 240" class="w-full h-64" role="img" aria-label="Cumulative cleaned indicators over time">
+                    <g stroke="#e1e0d9" stroke-width="1">
+                        <line x1="45" y1="20"  x2="685" y2="20"/>
+                        <line x1="45" y1="70"  x2="685" y2="70"/>
+                        <line x1="45" y1="120" x2="685" y2="120"/>
+                        <line x1="45" y1="170" x2="685" y2="170"/>
+                    </g>
+                    <g fill="#898781" font-size="11" text-anchor="end" font-family="Inter,sans-serif">
+                        <text x="38" y="24">2500</text><text x="38" y="74">1875</text><text x="38" y="124">1250</text><text x="38" y="174">625</text>
+                    </g>
+                    <line x1="45" y1="200" x2="685" y2="200" stroke="#c3c2b7" stroke-width="1"/>
+                    <!-- cumulative: 402, 690, 1015, 1402, 1780, 2110, 2438 mapped onto y (200 base, 20 top = 2500) -->
+                    <path d="M45,168 L152,145 L259,119 L366,88 L473,58 L580,31 L685,5 L685,200 L45,200 Z" fill="var(--c-aqua)" fill-opacity="0.10"/>
+                    <path d="M45,168 L152,145 L259,119 L366,88 L473,58 L580,31 L685,5" fill="none" stroke="var(--c-aqua)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <g fill="var(--c-aqua)">
+                        <circle cx="45" cy="168" r="3.5"/><circle cx="152" cy="145" r="3.5"/><circle cx="259" cy="119" r="3.5"/><circle cx="366" cy="88" r="3.5"/>
+                        <circle cx="473" cy="58" r="3.5"/><circle cx="580" cy="31" r="3.5"/><circle cx="685" cy="5" r="3.5"/>
+                    </g>
+                    <g fill="#898781" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">
+                        <text x="45" y="220">Jan</text><text x="152" y="220">Feb</text><text x="259" y="220">Mar</text><text x="366" y="220">Apr</text>
+                        <text x="473" y="220">May</text><text x="580" y="220">Jun</text><text x="685" y="220">Jul</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl border border-gray-200 card-shadow p-6">
+                    <h3 class="text-base font-semibold text-gray-900 mb-1">Indicators by Language</h3>
+                    <p class="text-xs text-gray-500 mb-5">Source language of the raw library</p>
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <div class="flex justify-between mb-1"><span>German (DE)</span><span class="font-semibold tabular-nums">1,486 · 55%</span></div>
+                            <div class="w-full bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:55%;background:var(--c-blue)"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>English (EN)</span><span class="font-semibold tabular-nums">921 · 34%</span></div>
+                            <div class="w-full bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:34%;background:var(--c-aqua)"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>French (FR)</span><span class="font-semibold tabular-nums">303 · 11%</span></div>
+                            <div class="w-full bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:11%;background:var(--c-yellow)"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border border-gray-200 card-shadow p-6">
+                    <h3 class="text-base font-semibold text-gray-900 mb-1">Domain Coverage vs. Target</h3>
+                    <p class="text-xs text-gray-500 mb-5">Mapped nodes against WP2 taxonomy target</p>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center gap-3"><span class="w-20 text-gray-600 shrink-0">Energy</span><div class="flex-1 bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:92%;background:var(--c-aqua)"></div></div><span class="w-10 text-right tabular-nums text-gray-700">92%</span></div>
+                        <div class="flex items-center gap-3"><span class="w-20 text-gray-600 shrink-0">Emissions</span><div class="flex-1 bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:85%;background:var(--c-aqua)"></div></div><span class="w-10 text-right tabular-nums text-gray-700">85%</span></div>
+                        <div class="flex items-center gap-3"><span class="w-20 text-gray-600 shrink-0">Water</span><div class="flex-1 bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:78%;background:var(--c-aqua)"></div></div><span class="w-10 text-right tabular-nums text-gray-700">78%</span></div>
+                        <div class="flex items-center gap-3"><span class="w-20 text-gray-600 shrink-0">Waste</span><div class="flex-1 bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:81%;background:var(--c-aqua)"></div></div><span class="w-10 text-right tabular-nums text-gray-700">81%</span></div>
+                        <div class="flex items-center gap-3"><span class="w-20 text-gray-600 shrink-0">Materials</span><div class="flex-1 bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:69%;background:var(--c-yellow)"></div></div><span class="w-10 text-right tabular-nums text-gray-700">69%</span></div>
+                        <div class="flex items-center gap-3"><span class="w-20 text-gray-600 shrink-0">Social</span><div class="flex-1 bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full" style="width:74%;background:var(--c-aqua)"></div></div><span class="w-10 text-right tabular-nums text-gray-700">74%</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PAGE: SETTINGS ============ -->
+        <section data-view="settings" class="hidden p-8 max-w-3xl mx-auto w-full space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Workspace Settings</h2>
+                <p class="text-gray-500 mt-1">Configuration for the I2L GreenFab WP2 environment.</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 card-shadow divide-y divide-gray-100">
+                <div class="px-6 py-4">
+                    <h3 class="text-sm font-semibold text-gray-900">General</h3>
+                </div>
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div><p class="text-sm font-medium text-gray-800">Workspace name</p><p class="text-xs text-gray-500">Displayed across the platform</p></div>
+                    <input type="text" value="I2L Workspace" class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 w-56 focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+                </div>
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div><p class="text-sm font-medium text-gray-800">Default interface language</p><p class="text-xs text-gray-500">UI + report language</p></div>
+                    <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 w-56 focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+                        <option>English</option><option>Deutsch</option><option>Français</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 card-shadow divide-y divide-gray-100">
+                <div class="px-6 py-4">
+                    <h3 class="text-sm font-semibold text-gray-900">Data Pipeline</h3>
+                </div>
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div><p class="text-sm font-medium text-gray-800">De-duplication threshold</p><p class="text-xs text-gray-500">Cosine similarity to auto-merge duplicates</p></div>
+                    <span class="text-sm font-mono px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg tabular-nums">0.98</span>
+                </div>
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div><p class="text-sm font-medium text-gray-800">Auto-ingest WP1 batches</p><p class="text-xs text-gray-500">Nightly sync of new raw indicators</p></div>
+                    <button role="switch" aria-checked="true" class="relative w-11 h-6 rounded-full bg-emerald-500 transition-colors">
+                        <span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow translate-x-5 transition-transform"></span>
+                    </button>
+                </div>
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div><p class="text-sm font-medium text-gray-800">Unit harmonisation</p><p class="text-xs text-gray-500">Normalise units to SI on import</p></div>
+                    <button role="switch" aria-checked="true" class="relative w-11 h-6 rounded-full bg-emerald-500 transition-colors">
+                        <span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow translate-x-5 transition-transform"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 card-shadow divide-y divide-gray-100">
+                <div class="px-6 py-4">
+                    <h3 class="text-sm font-semibold text-gray-900">API Access</h3>
+                </div>
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div><p class="text-sm font-medium text-gray-800">WP2 REST endpoint key</p><p class="text-xs text-gray-500">Used by WP3 interface consumers</p></div>
+                    <span class="text-sm font-mono px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-500">sk_live_••••••4f2a</span>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3">
+                <button class="text-sm font-medium text-gray-600 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50">Cancel</button>
+                <button class="text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg shadow-sm">Save changes</button>
+            </div>
+        </section>
+
     </main>
+
+    <script>
+        (function () {
+            const links = document.querySelectorAll('.nav-link');
+            const views = document.querySelectorAll('[data-view]');
+            const titleEl = document.getElementById('page-title');
+            const main = document.querySelector('main');
+            const ACTIVE = ['bg-emerald-50', 'text-emerald-700'];
+            const INACTIVE = ['text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-900'];
+
+            function show(name, title) {
+                views.forEach(v => v.classList.toggle('hidden', v.dataset.view !== name));
+                links.forEach(l => {
+                    const on = l.dataset.page === name;
+                    l.classList.remove(...ACTIVE, ...INACTIVE);
+                    l.classList.add(...(on ? ACTIVE : INACTIVE));
+                });
+                if (title) titleEl.textContent = title;
+                if (main) main.scrollTo(0, 0);
+            }
+
+            links.forEach(l => l.addEventListener('click', e => {
+                e.preventDefault();
+                show(l.dataset.page, l.dataset.title);
+            }));
+
+            show('home', 'Ecosystem Overview');
+        })();
+    </script>
 
 </body>
 </html>
