@@ -38,6 +38,19 @@
         .dock-item { transform-origin: bottom center; will-change: transform; }
         .dock.resetting .dock-item { transition: transform .28s cubic-bezier(.2,.8,.2,1), color .15s, background-color .15s; }
         @media (prefers-reduced-motion: reduce) { .dock-item { transform: none !important; } }
+        /* Hover tooltip (app name), macOS-style */
+        .dock-tip {
+            position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(4px);
+            margin-bottom: 12px; padding: 3px 9px; border-radius: 7px;
+            background: #111827; color: #fff; font-size: 11px; font-weight: 600; white-space: nowrap;
+            opacity: 0; pointer-events: none; transition: opacity .14s ease, transform .14s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,.20);
+        }
+        .dock-tip::after {
+            content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            border: 5px solid transparent; border-top-color: #111827;
+        }
+        .dock-item:hover .dock-tip { opacity: 1; transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body class="text-gray-800 antialiased h-screen flex flex-col overflow-hidden bg-[#FAFAFA]">
@@ -657,27 +670,27 @@
 
     </div>
 
-    <!-- ============================ FLOATING DOCK NAV ============================ -->
-    <nav class="dock fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1 p-1.5 bg-white/80 backdrop-blur-xl border border-gray-200/70 rounded-full shadow-[0_20px_25px_-5px_rgba(0,0,0,0.10),0_10px_10px_-5px_rgba(0,0,0,0.04)] z-50 max-w-[calc(100vw-2rem)]">
-        <button data-page="home" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
-            <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-            <span class="hidden sm:inline">Home</span>
+    <!-- ============================ FLOATING DOCK NAV (icons only) ============================ -->
+    <nav class="dock fixed bottom-6 left-1/2 -translate-x-1/2 flex items-end gap-2 p-2 bg-white/80 backdrop-blur-xl border border-gray-200/70 rounded-2xl shadow-[0_20px_25px_-5px_rgba(0,0,0,0.10),0_10px_10px_-5px_rgba(0,0,0,0.04)] z-50">
+        <button data-page="home" aria-label="Home" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl transition-colors">
+            <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            <span class="dock-tip">Home</span>
         </button>
-        <button data-page="kpi" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
-            <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>
-            <span class="hidden sm:inline">KPI Engine</span>
+        <button data-page="kpi" aria-label="KPI Engine" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl transition-colors">
+            <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>
+            <span class="dock-tip">KPI Engine</span>
         </button>
-        <button data-page="ai" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
-            <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-            <span class="hidden sm:inline">AI Models</span>
+        <button data-page="ai" aria-label="AI Models" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl transition-colors">
+            <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            <span class="dock-tip">AI Models</span>
         </button>
-        <button data-page="analytics" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
-            <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-            <span class="hidden sm:inline">Analytics</span>
+        <button data-page="analytics" aria-label="Analytics" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl transition-colors">
+            <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span class="dock-tip">Analytics</span>
         </button>
-        <button data-page="settings" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
-            <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-            <span class="hidden sm:inline">Settings</span>
+        <button data-page="settings" aria-label="Settings" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl transition-colors">
+            <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="dock-tip">Settings</span>
         </button>
     </nav>
 
