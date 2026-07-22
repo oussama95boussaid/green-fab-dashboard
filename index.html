@@ -34,6 +34,10 @@
         /* Subtle rise-in when switching pages */
         [data-view]:not(.hidden) > * { animation: fade .25s ease both; }
         @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+        /* macOS-style dock magnification */
+        .dock-item { transform-origin: bottom center; will-change: transform; }
+        .dock.resetting .dock-item { transition: transform .28s cubic-bezier(.2,.8,.2,1), color .15s, background-color .15s; }
+        @media (prefers-reduced-motion: reduce) { .dock-item { transform: none !important; } }
     </style>
 </head>
 <body class="text-gray-800 antialiased h-screen flex flex-col overflow-hidden bg-[#FAFAFA]">
@@ -655,23 +659,23 @@
 
     <!-- ============================ FLOATING DOCK NAV ============================ -->
     <nav class="dock fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1 p-1.5 bg-white/80 backdrop-blur-xl border border-gray-200/70 rounded-full shadow-[0_20px_25px_-5px_rgba(0,0,0,0.10),0_10px_10px_-5px_rgba(0,0,0,0.04)] z-50 max-w-[calc(100vw-2rem)]">
-        <button data-page="home" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-all">
+        <button data-page="home" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
             <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             <span class="hidden sm:inline">Home</span>
         </button>
-        <button data-page="kpi" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-all">
+        <button data-page="kpi" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
             <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>
             <span class="hidden sm:inline">KPI Engine</span>
         </button>
-        <button data-page="ai" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-all">
+        <button data-page="ai" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
             <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
             <span class="hidden sm:inline">AI Models</span>
         </button>
-        <button data-page="analytics" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-all">
+        <button data-page="analytics" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
             <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
             <span class="hidden sm:inline">Analytics</span>
         </button>
-        <button data-page="settings" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-all">
+        <button data-page="settings" class="dock-item flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
             <svg class="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
             <span class="hidden sm:inline">Settings</span>
         </button>
@@ -698,6 +702,30 @@
             items.forEach(b => b.addEventListener('click', () => show(b.dataset.page)));
 
             show('home');
+
+            /* --- macOS-style dock magnification --- */
+            const dock = document.querySelector('.dock');
+            const RANGE = 95;    // px of cursor influence on each side
+            const BOOST = 0.42;  // peak scale-up of the hovered item
+            let raf = null;
+
+            dock.addEventListener('pointermove', e => {
+                if (raf) return;
+                raf = requestAnimationFrame(() => {
+                    dock.classList.remove('resetting');
+                    items.forEach(it => {
+                        const r = it.getBoundingClientRect();
+                        const dist = Math.abs(e.clientX - (r.left + r.width / 2));
+                        const scale = 1 + BOOST * Math.max(0, 1 - dist / RANGE);
+                        it.style.transform = 'scale(' + scale.toFixed(3) + ')';
+                    });
+                    raf = null;
+                });
+            });
+            dock.addEventListener('pointerleave', () => {
+                dock.classList.add('resetting');
+                items.forEach(it => { it.style.transform = ''; });
+            });
         })();
     </script>
 
